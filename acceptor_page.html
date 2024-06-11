@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Acceptor Page</title>
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Arial', sans-serif;
+            background-image: url('https://images.unsplash.com/photo-1490818387583-1baba5e638af?q=80&w=1932&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D');
+            background-size: cover;
+            background-repeat: no-repeat;
+        }
+
+        .acceptor-page {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+        }
+
+        .acceptor-page h1 {
+            font-size: 2.5rem;
+            margin-bottom: 2rem;
+            color: #333;
+        }
+
+        #donor-list {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .donor-item {
+            background-color: #fff;
+            padding: 1.5rem;
+            border-radius: 0.5rem;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            text-align: left;
+        }
+
+        .donor-item p {
+            margin: 0.5rem 0;
+        }
+
+        .donor-item strong {
+            color: #e76f51;
+        }
+
+        .more-details {
+            margin-top: auto;
+        }
+
+        button {
+            background-color: #e76f51;
+            border: none;
+            padding: 0.5rem 1rem;
+            color: white;
+            cursor: pointer;
+            border-radius: 0.3rem;
+            margin-top: 10px;
+            transition: background-color 0.3s;
+        }
+
+        button:hover {
+            background-color: #d45d3b;
+        }
+
+        #login-modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(5px);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal-content {
+            background: rgba(255, 255, 255, 0.8);
+            border-radius: 20px;
+            padding: 2rem;
+            backdrop-filter: blur(20px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+            width: 100%;
+            max-width: 400px;
+            text-align: center;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .modal-content h2 {
+            margin-bottom: 1.5rem;
+            color: #333;
+        }
+
+        .form-group {
+            width: 100%;
+            margin-bottom: 1rem;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 0.75rem;
+            margin: 0.5rem 0;
+            border: none;
+            border-radius: 0.5rem;
+            background: rgba(255, 255, 255, 0.6);
+            backdrop-filter: blur(5px);
+            color: #333;
+        }
+
+        .form-group input::placeholder {
+            color: #888;
+        }
+
+        .button-login, .button-cancel {
+            width: 100%;
+            padding: 0.75rem;
+            margin: 0.5rem 0;
+            border: none;
+            border-radius: 0.5rem;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .button-login {
+            background-color: #e76f51;
+            color: #fff;
+        }
+
+        .button-login:hover {
+            background-color: #d45d3b;
+        }
+
+        .button-cancel {
+            background-color: #e76f51;
+            color: #fff;
+        }
+
+        .button-cancel:hover {
+            background-color: #d45d3b;
+        }
+
+        .close-btn {
+            position: absolute;
+            top: 10px;
+            right: 20px;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: #333;
+        }
+    </style>
+</head>
+<body>
+    <div class="acceptor-page">
+        <h1>Acceptor Page</h1>
+        <div id="donor-list"></div>
+    </div>
+
+    <div id="login-modal" class="login-modal">
+        <div class="modal-content">
+            <span class="close-btn" onclick="closeLoginModal()">&times;</span>
+            <h2>Login</h2>
+            <form id="login-form" method="POST">
+                <input type="hidden" id="request-index" name="request-index">
+                <div class="form-group">
+                    <input type="text" id="username" name="username" placeholder="Username" required>
+                </div>
+                <div class="form-group">
+                    <input type="password" id="password" name="password" placeholder="Password" required>
+                </div>
+                <div class="form-group">
+                    <input type="text" id="name" name="name" placeholder="Name" required>
+                </div>
+                <div class="form-group">
+                    <input type="text" id="address" name="address" placeholder="Address" required>
+                </div>
+                <div class="form-group">
+                    <input type="text" id="contact" name="contact" placeholder="Contact Number" required>
+                </div>
+                <div class="form-group">
+                    <input type="email" id="email" name="email" placeholder="Email" required>
+                </div>
+                <button type="submit" class="button-login">Login</button>
+                <button type="button" class="button-cancel" onclick="closeLoginModal()">Cancel</button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        function loadDonorDetails() {
+            const donorList = document.getElementById('donor-list');
+            let donors = JSON.parse(localStorage.getItem('donors')) || [];
+            let donorNumber = 1;
+    
+            donorList.innerHTML = '';
+            donors.forEach((donor, index) => {
+                donorList.innerHTML += `
+                    <div class="donor-item">
+                        <p><strong>Donor ${donorNumber++}:</strong></p>
+                        <p><strong>Name:</strong> ${donor.name}</p>
+                        <p><strong>Location:</strong> ${donor.location}</p>
+                        <button onclick="showMoreDetails(${index})">More Details</button>
+                        <div id="details-${index}" class="more-details" style="display:none;">
+                            <p><strong>Contact:</strong> ${donor.contact}</p>
+                            <p><strong>E-mail:</strong> ${donor.email}</p>
+                            <p><strong>Food Type:</strong> ${donor.foodType}</p>
+                            <p><strong>Quantity:</strong> ${donor.quantity}</p>
+                            <button class="button-login" onclick="showLoginModal(${index})">Request</button>
+                        </div>
+                    </div>
+                `;
+            });
+
+            setTimeout(() => {
+                moveToDecompositionPage(donors);
+            }, 14400000); // 14400000 milliseconds = 4 hours
+        }
+
+        function showMoreDetails(index) {
+            const detailsDiv = document.getElementById('details-' + index);
+            detailsDiv.style.display = detailsDiv.style.display === 'none' ? 'block' : 'none';
+        }
+
+        function showLoginModal(index) {
+            const donors = JSON.parse(localStorage.getItem('donors')) || [];
+            const donor = donors[index];
+            document.getElementById('login-form').action = `https://formsubmit.co/${donor.email}`;
+            document.getElementById('request-index').value = index;
+            document.getElementById('login-modal').style.display = 'flex';
+        }
+    
+        function closeLoginModal() {
+            const loginModal = document.getElementById('login-modal');
+            loginModal.style.display = 'none';
+        }
+
+        function moveToDecompositionPage(donors) {
+            localStorage.setItem('decomposition', JSON.stringify(donors)); 
+            localStorage.removeItem('donors'); 
+            window.location.href = 'decomposition_page.html'; 
+        }
+
+        window.onload = loadDonorDetails;
+    </script>
+</body>
+</html>

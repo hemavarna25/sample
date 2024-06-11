@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Donor Page</title>
+    <link rel="icon" href="f.png" type="image/x-icon">
+    <link rel="stylesheet" href="styles2.css">
+    <script>
+        function saveDonorInfo(event) {
+            event.preventDefault();
+            const name = document.getElementById('name').value;
+            const location = document.getElementById('location').value;
+            const contact = document.getElementById('contact').value;
+            const email = document.getElementById('email').value;
+            const address = document.getElementById('address').value;
+            const foodType = document.getElementById('food-type').value;
+            const quantity = document.getElementById('quantity').value;
+           
+
+            const donorInfo = {
+                name: name,
+                location: location,
+                contact: contact,
+                email:email,
+                address: address,
+                foodType: foodType,
+                quantity: quantity
+            };
+
+            let donors = JSON.parse(localStorage.getItem('donors')) || [];
+            donors.push(donorInfo);
+            localStorage.setItem('donors', JSON.stringify(donors));
+
+            window.location.href = 'success_page.html'; // Redirect to success page
+        }
+    </script>
+</head>
+<body>
+    <div class="donor-page">
+        <h1>Donor Information</h1>
+        <form class="donor-form" onsubmit="saveDonorInfo(event)">
+            <label for="name">Name:</label>
+            <input type="text" id="name" name="name" required>
+
+            <label for="location">Location:</label>
+            <input type="text" id="location" name="location" required>
+
+            <label for="contact">Contact Number:</label>
+            <input type="tel" id="contact" name="contact" required pattern="[0-9]{10}">
+
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email" required>
+
+            <label for="address">Address:</label>
+            <textarea id="address" name="address" rows="4" required></textarea>
+
+            <label for="food-type">Type of Food:</label>
+            <select id="food-type" name="food-type" required>
+                <option value="">Select</option>
+                <option value="veg">Veg</option>
+                <option value="non-veg">Non-Veg</option>
+            </select>
+
+            <label for="quantity">Quantity of Food:</label>
+            <input type="number" id="quantity" name="quantity" required min="1">
+
+            <button type="submit">Submit</button>
+        </form>
+    </div>
+</body>
+</html>

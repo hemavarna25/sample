@@ -1,0 +1,57 @@
+/* Resetting default margin and padding */
+body, h1, p {
+    margin: 0;
+    padding: 0;
+}
+
+/* Setting default font */
+body {
+    font-family: 'Inter', sans-serif;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-image: url('https://images.unsplash.com/photo-1490818387583-1baba5e638af?q=80&w=1932&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D');
+}
+
+/* Success page container */
+.success-page {
+    text-align: center;
+    padding: 40px;
+    background-color: #ffffff; /* White background */
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Light shadow */
+}
+
+/* Success message heading */
+.success-message {
+    font-size: 2rem; /* Larger font size */
+    color: #28a745; /* Green color */
+    margin-bottom: 20px; /* Space below the heading */
+}
+
+/* Success description */
+.success-description {
+    font-size: 1.2rem; 
+    color: #666666; /* Grey color */
+    margin-bottom: 30px; /* Space below the description */
+}
+
+/* Home button */
+.button-home {
+    padding: 10px 20px;
+    background-color: #007bff; /* Blue color */
+    border: none;
+    border-radius: 5px;
+    color: #ffffff; /* White text color */
+    font-size: 1rem;
+    cursor: pointer;
+    text-decoration: none;
+}
+
+/* Home button hover effect */
+.button-home:hover {
+    background-color: #0056b3; /* Darker blue color on hover */
+}

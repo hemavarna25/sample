@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Completed Details Page</title>
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Arial', sans-serif;
+            
+            background-repeat: no-repeat;
+             background-size:cover;
+            height: 50vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: black;
+        }
+
+        .details-page {
+            background-color: rgba(255, 255, 255, 0.8);
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        .details-page h1 {
+            font-size: 2.5rem;
+            text-align: center;
+            margin-bottom: 20px;
+            color: #333;
+        }
+
+        .completed-details {
+            margin-top: 20px;
+        }
+
+        .completed-details p {
+            margin: 10px 0;
+        }
+
+        .completed-details p strong {
+            font-weight: bold;
+            margin-right: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="details-page">
+        <h1>Completed Details</h1>
+        <div class="completed-details">
+            <!-- Completed donor details will be displayed here -->
+        </div>
+    </div>
+    <script>
+        // Retrieve completed donor details from localStorage and display them
+        window.onload = function() {
+            const completedDonor = JSON.parse(localStorage.getItem('completedDonor'));
+            if (completedDonor) {
+                const detailsContainer = document.querySelector('.completed-details');
+                detailsContainer.innerHTML = `
+                    <p><strong>Name:</strong> ${completedDonor.name}</p>
+                    <p><strong>Location:</strong> ${completedDonor.location}</p>
+                    <p><strong>Contact:</strong> ${completedDonor.contact}</p>
+                    <p><strong>E-mail:</strong> ${completedDonor.email}</p>
+                    <p><strong>Food Type:</strong> ${completedDonor.foodType}</p>
+                    <p><strong>Quantity:</strong> ${completedDonor.quantity}</p>
+                `;
+            }
+        };
+    </script>
+</body>
+</html>

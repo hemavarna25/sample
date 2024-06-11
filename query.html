@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Choose Acceptor Details</title>
+    <link rel="icon" href="f.png" type="image/x-icon">
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Arial', sans-serif;
+            background-image:url('https://images.unsplash.com/photo-1490818387583-1baba5e638af?q=80&w=1932&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D');
+            background-repeat: no-repeat ;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            
+        }
+        
+
+        .container {
+            text-align: center;
+            background: white;
+            padding: 2rem;
+            border-radius: 1rem;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .container h1 {
+            margin-bottom: 2rem;
+        }
+
+        .button-container {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+        }
+
+        button {
+            background-color: #e76f51;
+            border: none;
+            padding: 0.75rem 1.5rem;
+            color: white;
+            cursor: pointer;
+            border-radius: 0.3rem;
+            font-size: 1rem;
+            transition: background-color 0.3s;
+        }
+
+        button:hover {
+            background-color: #d45d3b;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Choose an Option</h1>
+        <h3>This options is made for your convenient</h3>
+        <div class="button-container">
+            <button onclick="viewAllAcceptors()">All Location</button>
+            <button onclick="viewLocationBasedAcceptors()">Near By</button>
+        </div>
+    </div>
+    
+
+    <script>
+        function viewAllAcceptors() {
+            window.location.href = 'donar_page.html';
+        }
+
+        function viewLocationBasedAcceptors() {
+            // Replace this with the actual URL for location-based acceptors
+            window.location.href = 'location_input.html';
+        }
+        
+    </script>
+</body>
+</html>

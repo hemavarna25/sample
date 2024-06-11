@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Suggested Orphanages</title>
+    <style>
+        .body,.html {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Arial', sans-serif;
+            background-image: url('https://images.unsplash.com/photo-1506784385849-74e4a6c3b8f5?q=80&w=1932&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .container {
+            text-align: center;
+            background: rgba(255, 255, 255, 0.2);
+            padding: 2rem;
+            border-radius: 1rem;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            max-width: 600px;
+            margin: auto;
+        }
+
+        .container h1 {
+            margin-bottom: 2rem;
+            color:black;
+        }
+
+        .orphanage-list {
+            margin-top: 2rem;
+            text-align: left;
+            color: #fff;
+        }
+
+        .orphanage-item {
+            background: rgba(255, 255, 255, 0.8);
+            padding: 1rem;
+            border-radius: 0.5rem;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            margin-bottom: 1rem;
+            color: #333;
+        }
+
+        .orphanage-item h2 {
+            margin: 0 0 0.5rem 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Suggested Orphanages</h1>
+        <div id="orphanage-list" class="orphanage-list"></div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const params = new URLSearchParams(window.location.search);
+            const location = params.get('location');
+
+            const orphanages = [
+            { name: 'Manithalayam Old Age Home', address: 'No 187, 4th Street, Irugur, Coimbatore - 641103 ',contact:8105623587, location: 'coimbatore' },
+            { name: 'Universal Peace Foundation', address: 'Nallagoundan Palayam K V Palayam Post Annur Road, Karumathampatti, Coimbatore - 641659', contact:7383162775, location: 'coimbatore' },
+            { name: 'Shiragugal Oldage Home', address: 'Site No 2, Velavan Avenue, Pannimadai, Coimbatore - 641017 (Thippanur Road)',contact:8734853582, location: 'coimbatore' },
+            { name: 'Oondrukol', address: '14 B, Krishna Complex, Opposite to Boys School, Thondamuthur, Coimbatore - 641109', contact:9054589084,location: 'coimbatore' },
+            { name: 'JK SENIOR LIVING CENTER', address: 'No 37, Bajanai Kovil Street, Uppilipalayam, Coimbatore - 641015',contact:7041661298, location: 'coimbatore' },
+            { name: 'Eegam Trust', address: 'No.7, Vasanthamullai Nagar, Madukkarai Main Road, Kurichi, Coimbatore - 641021',contact:7043260734, location: 'coimbatore' },
+
+            { name: 'Amaidhi Illam Trust', address: 'Balu Building, Noyyal Road, Paramathi, Karur - 639111 (Opposite Pidari Sellandiyamman Kovil)', contact:7942695254,location: 'karur' },
+            { name: 'Comman Charitable Public Welfare Trust', address: 'AMERSON PLAZA, NORTH NARASIMMA PURAM, Karur West, Karur - 639001 (NEAR SATHASIVAM HOSPITAL)',contact:7942695254, location: 'karur' },
+            { name: 'Sri Jithan Home Care', address: 'No 658, Kumaravel Main Road Karur Thaluka, Ayyavadi, Karur  - 612204 (Near By Government School)',contact:9980664367, location: 'karur' },
+            { name: 'Rosa mystica home', address: 'Kulithalai, Karur - 639104',contact:7942695885, location: 'karur' },
+            { name: 'Sri Ragavendra Trust', address: 'Velliyanai, Karur - 639118 (Sellandipatti Post, Vellianai North)',contact:7942695254, location: 'karur' },
+
+            { name: 'Universal Peace Foundation', address: 'No:147, Malliampatti Road, Panayampalli, Pulimpatti, Erode - 638459',contact:8735086496, location: 'erode' },
+            { name: 'Happy Karunai Illam', address: 'No 5/209D, Vellai Pillayar Kovil Medu, Uthukuli(Po), Vellaraveli, Erode - 638103 (Near Kaliyamman Kovil)',contact:8460881834, location: 'erode' },
+            { name: 'K.A.S MEDICAL CENTRE & ELDERLY CARE CENTRE', address: 'NH-47 Kovai Salem Road, Solipalayam, Thiruvachi, Perundhurai, Solipalayam, Erode - 638115 (Near A2B HOTEL)',contact:7022619351, location: 'erode' },
+            { name: 'PHOENIX VISION CHARITABLE TRUST @ OLDAGE HOME ERODE', address: 'Lakshmi Garden, Chennimalai Road, Cheran Nagar, Shastri Nagar, Erode - 638002 (KK Nagar, Rangampalayam)',contact:8460551564, location: 'erode' },
+            { name: 'Atchayam Trust', address: 'Atchayam Beggars Rehabilitation, Solarputhur to Lakkapuram Road, Solar, Erode - 638002 (New Bus Stand Backside)',contact:9787800267, location: 'erode' },
+            { name: 'Rights Education And Development Centre', address: '195, Mgr Nagar, Bannari Main Road, Kombupallam, Sathyamangalam, Erode - 638401',contact:9747435744, location: 'erode' },
+            { name: 'Kirush Kakkum Karangal', address: 'Opposite to Servait Nursing College, Karunya Nagar, Manikandam, Erode -  638115 (Opposite to Servait Nursing College)',contact:9054446491, location: 'erode' },
+            { name: 'Sri Venkateswara Welfare Society', address: 'A.E.T School Campus, Perundurai Road',contact:9994692028, location: 'erode' },
+            { name: 'St. Josephs Orphanage', address: 'Four Roads, Salem, Tamil Nadu 636009',contact:4272260944, location: 'salem' },
+            { name: 'Sri Sakthi Anbu Illam', address: 'Attur Main Road, Narasingapuram, Salem, Tamil Nadu 636106',contact:9360712345, location: 'salem' },
+            { name: 'Seva Bharathi Childrens Home', address: 'Kannankurichi, Salem, Tamil Nadu 636008', contact:9894765313,location: 'salem' },
+            { name: 'Bethel Orphanage', address: 'Arisipalayam, Salem, Tamil Nadu 636015', contact:9443256564,location: 'salem' },
+            { name: 'Hope Orphanage', address: 'Kondalampatti, Salem, Tamil Nadu 636010',contact:9842798427, location: 'salem' },
+            { name: 'Shalom Childrens Home', address: 'Meyyanur, Salem, Tamil Nadu 636004',contact:9789912345, location: 'salem' },
+            { name: 'Madurai Orphanage Society', address: '25, East Street, Madurai',contact:7708727188, location: 'madurai' },
+            { name: 'Grace Child Home', address: '10, West Street, Madurai',contact:7708727188, location: 'madurai' },
+            { name: 'Hope Haven Orphanage', address: '15, North Street, Madurai',contact:7708727188, location: 'madurai' },
+            { name: 'Shelter of Love Orphanage', address: '20, South Street, Madurai',contact:7708727188, location: 'madurai' },
+            { name: 'Angels Care Home', address: '30, Central Street, Madurai',contact:7708727188, location: 'madurai' },
+            { name: 'Precious Pearls Childrens Home', address: '40, Pearl Avenue, Madurai',contact:7708727188, location: 'madurai' },
+
+            { name: 'Annai Fathima Child Welfare Centre', address: 'Annai Illam, Near Regional Engineering College, Tiruchirappalli',contact:9444444874, location: 'trichy' },
+            { name: 'Manitham Trust', address: 'No 9/5, Gopala Krishnan Pillai Street, Periyappa Illam, Tiruchirappalli ',contact:9080808068, location: 'trichy' },
+            { name: 'Divya Orphanage', address: ' No.24, Rajiv Gandhi Nagar, Edamalaipatti Pudur, Tiruchirappalli',contact:9688332216, location: 'trichy' },
+            { name: 'Sai Nandhanam Old Age Home', address: '19, 34, Chandra Nagar Street, Periyar Nagar, Tiruchirappalli',contact:7845377223, location: 'trichy' },
+
+            { name: 'Annai Fathima Child Welfare Centre', address: '1, Jawahar Nagar, 6th Street, Chinthamani',contact:9444444874, location: 'nammakal' },
+            { name: 'Vatsalyapuram Orphanage', address: 'No.40A, Kattur Road, Near LIC, Rasipuram, Namakkal ',contact:7708015565, location: 'nammakal' },
+            { name: 'Guru Krupa Old Age Home', address: 'New 135, Old No. 134, Super Swasthick Villa, Periyar Nagar, Srirangam',contact: 8973176283, location: 'nammakal' },
+            { name: 'Anbarasi Social Action', address: '19, Karur Road, Dindigul, Tamil Nadu, India',contact:9944345991, location: 'dindugal' },
+            { name: 'Homes of Compassion Trust ', address: '3rd Floor, Hotel Archana, Opp. Kamarajar Bus Stand, Dindigul', contact:9894600000,location: 'dindugal' },
+            { name: 'Mother Saradadevi Social Service Society', address: '115, Gandhi Nagar, Oddanchatram, Dindigul',contact: 4553240631, location: 'dindugal' },
+
+            { name: 'Angels Care Home', address:'Crescent Street,Chennai',contact:9876543210, location: 'chennai' },
+            { name: 'Hope Haven Orphanage', address: '123, Sunshine Road, Chennai',contact:9871234567, location: 'chennai' },
+            { name: 'Sunrise Shelter for Children', address: '456, Rainbow Avenue, Chennai',contact:9873216540, location: 'chennai' },
+            { name: 'Annai Fathima Child Welfare Centre', address: 'Alagapuram, Salem, Tamil Nadu 636016',contact:9443347662, location: 'chennai' }
+            ];
+
+            const filteredOrphanages = orphanages.filter(orphanage => orphanage.location.toLowerCase().includes(location.toLowerCase()));
+            const orphanageList = document.getElementById('orphanage-list');
+            orphanageList.innerHTML = '';
+
+            if (filteredOrphanages.length > 0) {
+                filteredOrphanages.forEach(orphanage => {
+                    const orphanageItem = document.createElement('div');
+                    orphanageItem.className = 'orphanage-item';
+                    orphanageItem.innerHTML = `
+                        <h2>${orphanage.name}</h2>
+                        <p>${orphanage.address}</p>
+                        <p>${orphanage.contact}</p>
+
+                    `;
+                    orphanageList.appendChild(orphanageItem);
+                });
+            } else {
+                orphanageList.innerHTML = '<p>No orphanages found for your location.</p>';
+            }
+        });
+    </script>
+</body>
+</html>
